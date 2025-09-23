@@ -19,6 +19,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('usuarios.urls')),  # Esto enlaza tu app a la URL principal
-    path('cuentas/', include('django.contrib.auth.urls')), # Esto enlaza las URLs de login/logout
+    path('', include('usuarios.urls')),  # Includes your homepage and registration form at the root
+    path('cuentas/', include('django.contrib.auth.urls')), # Includes login/logout
 ]
