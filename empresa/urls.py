@@ -16,9 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from usuarios import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('usuarios.urls')),  # Includes your homepage and registration form at the root
     path('cuentas/', include('django.contrib.auth.urls')), # Includes login/logout
+    path('accounts/profile/', views.perfil, name='profile'),
 ]

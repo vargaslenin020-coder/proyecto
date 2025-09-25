@@ -16,6 +16,8 @@ def inicio(request):
     return render(request, 'usuarios/inicio.html')
 
 
-@login_required
 def perfil(request):
     return render(request, 'usuarios/perfil.html')
+
+def modulos(request):
+    return render(request, 'usuarios/modulos.html')
