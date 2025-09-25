@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required 
 
 def registro(request):
     if request.method == 'POST':
@@ -13,3 +14,8 @@ def registro(request):
 
 def inicio(request):
     return render(request, 'usuarios/inicio.html')
+
+
+@login_required
+def perfil(request):
+    return render(request, 'usuarios/perfil.html')
