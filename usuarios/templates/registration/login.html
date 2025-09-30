@@ -1,125 +1,300 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión</title>
-    <style>
-        body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f2f5;
-    color: #333;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    text-align: center;
-}
-
-.container {
-    background-color: #fff;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    width: 100%;
-    animation: fadeIn 1s ease-in-out;
-}
-
-h1 {
-    color: #0056b3;
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-}
-
-.form-card {
-    text-align: left;
-}
-
-.form-card p {
-    margin-bottom: 1rem;
-}
-
-.form-card input {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-    margin-top: 5px;
-}
-
-.button {
-    display: block;
-    width: 100%;
-    padding: 0.75rem;
-    border: none;
-    border-radius: 5px;
-    background-color: #28a745;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 1.5rem;
-}
-
-.button:hover {
-    background-color: #218838;
-}
-
-.login-link {
-    margin-top: 1.5rem;
-}
-
-.login-link a {
-    color: #007bff;
-    text-decoration: none;
-}
-
-.login-link a:hover {
-    text-decoration: underline;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Iniciar Sesión</title>
+  <style>
+    :root{
+      --bg: #0b0f14;
+      --panel: #0f1720;
+      --muted: #9aa4b2;
+      --text: #e6eef6;
+      --accent: #4f9cff;
+      --accent-strong: #2977ff;
+      --success: #35c77a;
+      --glass: rgba(255,255,255,0.03);
+      --input-bg: rgba(255,255,255,0.03);
+      --input-border: rgba(255,255,255,0.06);
+      --radius: 12px;
+      --shadow: 0 6px 24px rgba(2,6,11,0.6);
+      --focus-ring: 3px rgba(79,156,255,0.12);
+      font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
     }
-    to {
-        opacity: 1;
-        transform: translateY(0);
+
+    /* Light theme variables (used when .light class present) */
+    .light {
+      --bg: #f4f6fb;
+      --panel: #ffffff;
+      --muted: #6b7280;
+      --text: #0f1720;
+      --accent: #2563eb;
+      --accent-strong: #1e40af;
+      --success: #16a34a;
+      --glass: rgba(15,23,32,0.03);
+      --input-bg: #f8fafc;
+      --input-border: #e6e9ef;
+      --shadow: 0 6px 24px rgba(15,23,32,0.08);
+      --focus-ring: 3px rgba(37,99,235,0.12);
     }
-}
-    </style>
+
+    /* Basic layout */
+    html,body{
+      height:100%;
+      margin:0;
+      background: radial-gradient(1200px 400px at 10% 10%, rgba(79,156,255,0.06), transparent),
+                  radial-gradient(900px 300px at 90% 90%, rgba(53,199,122,0.03), transparent),
+                  var(--bg);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    .wrap{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:2rem;
+      gap:2rem;
+    }
+
+    .container{
+      width:100%;
+      max-width:420px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:var(--radius);
+      padding:2rem;
+      box-shadow:var(--shadow);
+      border: 1px solid rgba(255,255,255,0.03);
+      backdrop-filter: blur(6px);
+      transition: transform .35s ease, box-shadow .35s ease;
+    }
+
+    .container:hover{ transform: translateY(-4px); }
+
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1rem;
+      margin-bottom:1.1rem;
+    }
+
+    h1{
+      margin:0;
+      font-size:1.5rem;
+      letter-spacing: -0.2px;
+    }
+
+    .subtitle{
+      display:block;
+      font-size:.88rem;
+      color:var(--muted);
+      margin-top:.2rem;
+    }
+
+    /* Form */
+    form .field{
+      margin-top:1rem;
+    }
+
+    label{
+      display:block;
+      font-size:.85rem;
+      color:var(--muted);
+      margin-bottom:0.45rem;
+    }
+
+    input[type="text"],
+    input[type="password"]{
+      width:100%;
+      padding:0.72rem 0.9rem;
+      font-size:1rem;
+      border-radius:10px;
+      border:1px solid var(--input-border);
+      background:var(--input-bg);
+      color:var(--text);
+      outline:none;
+      box-sizing:border-box;
+      transition: box-shadow .18s ease, border-color .18s ease, transform .08s ease;
+    }
+
+    input::placeholder{ color: rgba(255,255,255,0.28); }
+
+    input:focus{
+      box-shadow: 0 0 0 var(--focus-ring);
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .actions{
+      margin-top:1.35rem;
+      display:flex;
+      gap:.75rem;
+      align-items:center;
+    }
+
+    .button{
+      flex:1;
+      padding:0.76rem;
+      border-radius:10px;
+      border:none;
+      cursor:pointer;
+      font-weight:600;
+      font-size:1rem;
+      background: linear-gradient(180deg,var(--accent), var(--accent-strong));
+      color:white;
+      box-shadow: 0 6px 18px rgba(41,119,255,0.12), 0 1px 0 rgba(255,255,255,0.02) inset;
+      transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+    }
+
+    .button:active{ transform: translateY(1px); }
+    .button:disabled{ opacity:0.6; cursor:not-allowed; }
+
+    .secondary{
+      background:transparent;
+      border:1px solid rgba(255,255,255,0.06);
+      color:var(--text);
+      padding:.7rem .85rem;
+      border-radius:10px;
+      cursor:pointer;
+      font-size:.95rem;
+    }
+
+    .help{
+      margin-top:1rem;
+      font-size:.9rem;
+      color:var(--muted);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:1rem;
+    }
+
+    .help a{
+      color:var(--accent);
+      text-decoration:none;
+      font-weight:600;
+    }
+
+    .help a:hover{text-decoration:underline;}
+
+    /* Small footer text */
+    .foot{
+      margin-top:1.4rem;
+      font-size:.82rem;
+      color:var(--muted);
+      text-align:center;
+    }
+
+    /* Theme toggle */
+    .theme-toggle{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      cursor:pointer;
+      font-size:.86rem;
+      padding:6px 8px;
+      border-radius:8px;
+    }
+
+    .theme-toggle:focus{ outline: none; box-shadow: 0 0 0 var(--focus-ring); }
+
+    /* Responsive */
+    @media (max-width:480px){
+      .container{ padding:1.3rem; border-radius:10px; }
+      h1{ font-size:1.25rem; }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Iniciar Sesión</h1>
-        <form method="post" class="form-card">
-            {% csrf_token %}
-            <form method="post" class="form-card" action="{% url 'login' %}">
-    {% csrf_token %}
-    <!-- Aquí agregamos el campo oculto next -->
-    <input type="hidden" name="next" value="{% url 'perfil' %}">
+  <div class="wrap" id="pageWrap">
+    <main class="container" role="main" aria-labelledby="signinTitle">
+      <header>
+        <div>
+          <h1 id="signinTitle">Iniciar Sesión</h1>
+          <span class="subtitle">Accede a tu cuenta de forma segura</span>
+        </div>
 
-    <p>
-        <label for="id_username">Usuario:</label>
-        <input type="text" name="username" id="id_username" required>
-    </p>
-    <p>
-        <label for="id_password">Contraseña:</label>
-        <input type="password" name="password" id="id_password" required>
-    </p>
-    <button type="submit" class="button">Entrar</button>
-        <p class="login-link">¿No tienes una cuenta? <a href="/registro/">Regístrate</a></p>
-    </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-    const container = document.querySelector('.container');
-    container.style.opacity = '1';
-});
-    </script>
+        <!-- Theme toggle -->
+        <button class="theme-toggle" id="themeToggle" aria-pressed="false" title="Alternar tema">
+          🌓 <span id="themeLabel">Oscuro</span>
+        </button>
+      </header>
+
+      <!-- Form: Mantengo etiquetas Django tal como tenías -->
+      <form method="post" action="{% url 'login' %}" novalidate>
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{% url 'perfil' %}">
+
+        <div class="field">
+          <label for="id_username">Usuario</label>
+          <input type="text" id="id_username" name="username" required autocomplete="username" placeholder="tu_usuario">
+        </div>
+
+        <div class="field">
+          <label for="id_password">Contraseña</label>
+          <input type="password" id="id_password" name="password" required autocomplete="current-password" placeholder="••••••••">
+        </div>
+
+        <div class="actions">
+          <button type="submit" class="button">Entrar</button>
+          <a href="/registro/" class="secondary" role="button" aria-label="Registrarse">Registrarse</a>
+        </div>
+
+        <div class="help">
+          <a href="/recuperar-contraseña/">¿Olvidaste tu contraseña?</a>
+          <span style="color:var(--muted);font-size:.86rem">Acceso seguro</span>
+        </div>
+
+        <p class="foot">Al iniciar sesión aceptas los <a href="/terminos/" style="color:var(--accent)">Términos y Condiciones</a>.</p>
+      </form>
+    </main>
+  </div>
+
+  <script>
+    // Tema: guarda preferencia en localStorage
+    (function(){
+      const page = document.documentElement;
+      const wrapper = document.getElementById('pageWrap');
+      const toggle = document.getElementById('themeToggle');
+      const label = document.getElementById('themeLabel');
+
+      // Inicializar segun preferencia o sistema
+      const stored = localStorage.getItem('theme-mode');
+      const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+      let mode = stored || (prefersLight ? 'light' : 'dark');
+
+      function applyMode(m){
+        if(m === 'light'){
+          page.classList.add('light');
+          toggle.setAttribute('aria-pressed','true');
+          label.textContent = 'Claro';
+        } else {
+          page.classList.remove('light');
+          toggle.setAttribute('aria-pressed','false');
+          label.textContent = 'Oscuro';
+        }
+      }
+
+      applyMode(mode);
+
+      toggle.addEventListener('click', () => {
+        mode = (page.classList.contains('light')) ? 'dark' : 'light';
+        localStorage.setItem('theme-mode', mode);
+        applyMode(mode);
+      });
+
+      // Mejora: enviar formulario con Enter desde inputs (comportamiento natural)
+      const form = document.querySelector('form');
+      form.addEventListener('submit', (e) => {
+        // puedes añadir validaciones JS extra aquí si lo deseas
+      });
+    })();
+  </script>
 </body>
 </html>

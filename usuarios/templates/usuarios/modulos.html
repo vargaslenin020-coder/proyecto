@@ -1,32 +1,99 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Módulos Iniciales</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #fdfdfd;
-            padding: 2rem;
-        }
-        h1 {
-            color: #007BFF;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Módulos Iniciales</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #0e0e10; /* estilo Steam */
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      background-color: #1b1b1d;
+      padding: 2.5rem;
+      border-radius: 12px;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.6);
+      text-align: center;
+      max-width: 600px;
+      width: 100%;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    h1 {
+      color: #00adee;
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 1.8rem;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      background: #00adee;
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 16px;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn:hover {
+      background: #008bbf;
+      transform: scale(1.02);
+    }
+
+    .volver {
+      margin-top: 2rem;
+      display: inline-block;
+      padding: 10px 20px;
+      background: #6c757d;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .volver:hover {
+      background: #5a6268;
+      transform: scale(1.05);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
 <body>
+  <div class="container">
     <h1>Módulos Iniciales de Competencias Digitales</h1>
-    <ul>
-        <li>Conocimientos básicos de hardware y software</li>
-        <li>Manejo de sistemas operativos y archivos</li>
-        <li>Navegación en Internet</li>
-        <li>Comunicación digital</li>
-        <li>Ofimática básica</li>
-        <li>Seguridad digital</li>
-        <li>Ciudadanía digital</li>
-    </ul>
+
+    <div class="modulos-container">
+      <!-- Cada botón irá a una vista de Django -->
+      <a href="{% url 'modulo1' %}" class="btn">Módulo 1: Conocimientos básicos de hardware y software</a>
+      <a href="#" class="btn">Módulo 2: Manejo de sistemas operativos y archivos</a>
+      <a href="#" class="btn">Módulo 3: Navegación en Internet</a>
+      <a href="#" class="btn">Módulo 4: Comunicación digital</a>
+      <a href="#" class="btn">Módulo 5: Ofimática básica</a>
+      <a href="#" class="btn">Módulo 6: Seguridad digital</a>
+      <a href="#" class="btn">Módulo 7: Ciudadanía digital</a>
+    </div>
 
     <!-- Botón para volver al perfil -->
-    <a href="{% url 'perfil' %}" class="btn">Volver al Perfil</a>
+    <div>
+      <a href="{% url 'perfil' %}" class="volver">⬅ Volver al Perfil</a>
+    </div>
+  </div>
 </body>
 </html>

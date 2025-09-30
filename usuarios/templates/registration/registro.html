@@ -1,114 +1,187 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Colaborador</title>
-    <style>
-        body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f2f5;
-    color: #333;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    text-align: center;
-}
-
-.container {
-    background-color: #fff;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    width: 100%;
-    animation: fadeIn 1s ease-in-out;
-}
-
-h1 {
-    color: #0056b3;
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-}
-
-.form-card {
-    text-align: left;
-}
-
-.form-card p {
-    margin-bottom: 1rem;
-}
-
-.form-card input {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-    margin-top: 5px;
-}
-
-.button {
-    display: block;
-    width: 100%;
-    padding: 0.75rem;
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 1.5rem;
-}
-
-.button:hover {
-    background-color: #0056b3;
-}
-
-.login-link {
-    margin-top: 1.5rem;
-}
-
-.login-link a {
-    color: #007bff;
-    text-decoration: none;
-}
-
-.login-link a:hover {
-    text-decoration: underline;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registro de Colaborador</title>
+  <style>
+    :root{
+      --bg: #0b0f14;
+      --panel: #0f1720;
+      --muted: #9aa4b2;
+      --text: #e6eef6;
+      --accent: #4f9cff;
+      --accent-strong: #2977ff;
+      --glass: rgba(255,255,255,0.03);
+      --input-bg: rgba(255,255,255,0.03);
+      --input-border: rgba(255,255,255,0.06);
+      --radius: 12px;
+      --shadow: 0 6px 24px rgba(2,6,11,0.6);
+      --focus-ring: 3px rgba(79,156,255,0.12);
+      font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
     }
-    to {
-        opacity: 1;
-        transform: translateY(0);
+
+    /* Light theme */
+    .light {
+      --bg: #f4f6fb;
+      --panel: #ffffff;
+      --muted: #6b7280;
+      --text: #0f1720;
+      --accent: #2563eb;
+      --accent-strong: #1e40af;
+      --glass: rgba(15,23,32,0.03);
+      --input-bg: #f8fafc;
+      --input-border: #e6e9ef;
+      --shadow: 0 6px 24px rgba(15,23,32,0.08);
+      --focus-ring: 3px rgba(37,99,235,0.12);
     }
-}
-    </style>
+
+    html,body{
+      height:100%;
+      margin:0;
+      background: radial-gradient(1200px 400px at 10% 10%, rgba(79,156,255,0.06), transparent),
+                  radial-gradient(900px 300px at 90% 90%, rgba(53,199,122,0.03), transparent),
+                  var(--bg);
+      color:var(--text);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:1rem;
+    }
+
+    .container{
+      width:100%;
+      max-width:420px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:var(--radius);
+      padding:2rem;
+      box-shadow:var(--shadow);
+      border: 1px solid rgba(255,255,255,0.03);
+      backdrop-filter: blur(6px);
+      animation: fadeIn 0.9s ease forwards;
+    }
+
+    h1{
+      margin:0 0 1rem;
+      font-size:1.6rem;
+      color:var(--accent);
+      text-align:center;
+    }
+
+    form p{
+      margin:0 0 1rem;
+    }
+
+    label{
+      display:block;
+      font-size:.9rem;
+      margin-bottom:.4rem;
+      color:var(--muted);
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"]{
+      width:100%;
+      padding:0.75rem;
+      border:1px solid var(--input-border);
+      border-radius:10px;
+      background:var(--input-bg);
+      color:var(--text);
+      box-sizing:border-box;
+      transition:border .2s ease, box-shadow .2s ease;
+    }
+
+    input:focus{
+      border-color:var(--accent);
+      box-shadow:0 0 0 var(--focus-ring);
+      outline:none;
+    }
+
+    .button{
+      display:block;
+      width:100%;
+      padding:0.8rem;
+      margin-top:1.3rem;
+      border:none;
+      border-radius:10px;
+      font-weight:bold;
+      background: linear-gradient(180deg,var(--accent), var(--accent-strong));
+      color:white;
+      cursor:pointer;
+      transition:transform .12s ease;
+    }
+
+    .button:active{ transform:scale(0.98); }
+
+    .login-link{
+      margin-top:1rem;
+      font-size:.9rem;
+      color:var(--muted);
+      text-align:center;
+    }
+
+    .login-link a{
+      color:var(--accent);
+      text-decoration:none;
+      font-weight:600;
+    }
+
+    .login-link a:hover{ text-decoration:underline; }
+
+    .theme-toggle{
+      position:absolute;
+      top:1rem;
+      right:1rem;
+      background:transparent;
+      border:none;
+      color:var(--muted);
+      cursor:pointer;
+      font-size:.9rem;
+    }
+
+    @keyframes fadeIn {
+      from {opacity:0; transform:translateY(20px);}
+      to {opacity:1; transform:translateY(0);}
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Registrarse</h1>
-        <form method="post" class="form-card">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="button">Crear Cuenta</button>
-        </form>
-        <p class="login-link">¿Ya tienes una cuenta? <a href="/cuentas/login/">Inicia Sesión</a></p>
-    </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-    const container = document.querySelector('.container');
-    container.style.opacity = '1';
-});
-    </script>
+  <button class="theme-toggle" id="themeToggle">🌓 <span id="themeLabel">Oscuro</span></button>
+  <div class="container">
+    <h1>Registrarse</h1>
+    <form method="post" class="form-card">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="button">Crear Cuenta</button>
+    </form>
+    <p class="login-link">¿Ya tienes una cuenta? <a href="/cuentas/login/">Inicia Sesión</a></p>
+  </div>
+
+  <script>
+    const toggle = document.getElementById("themeToggle");
+    const label = document.getElementById("themeLabel");
+    const page = document.documentElement;
+
+    // Inicializar
+    let mode = localStorage.getItem("theme-mode") || "dark";
+    applyMode(mode);
+
+    toggle.addEventListener("click", ()=>{
+      mode = page.classList.contains("light") ? "dark" : "light";
+      localStorage.setItem("theme-mode",mode);
+      applyMode(mode);
+    });
+
+    function applyMode(m){
+      if(m==="light"){
+        page.classList.add("light");
+        label.textContent="Claro";
+      }else{
+        page.classList.remove("light");
+        label.textContent="Oscuro";
+      }
+    }
+  </script>
 </body>
 </html>

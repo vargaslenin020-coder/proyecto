@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Módulo 1 — Conocimientos de Hardware y Software</title>
+<style>
+  :root{
+    --bg:#0f1113; --card:#17181a; --accent:#00adee; --accent-strong:#008bbf;
+    --muted:#bfc6ca; --success:#4bd37b; --danger:#ff6b6b;
+    --radius:12px; --shadow:0 8px 20px rgba(0,0,0,0.6);
+    font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:linear-gradient(180deg,#0b0b0c 0%, #101214 100%);color:#fff;padding:20px;display:flex;justify-content:center;}
+  .wrap{width:100%;max-width:1100px;padding:18px;}
+  header{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+  h1{margin:0;color:var(--accent);font-size:1.6rem}
+  .meta{color:var(--muted);font-size:0.95rem}
+
+  .grid{display:grid;grid-template-columns: 1fr 360px;gap:18px}
+  @media (max-width:900px){ .grid{grid-template-columns:1fr} }
+
+  .card{background:var(--card);padding:18px;border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:14px}
+  .card h2{margin-top:0;color:var(--accent)}
+  p{color:var(--muted);line-height:1.5}
+
+  /* Progress */
+  .progressWrap{display:flex;align-items:center;gap:12px}
+  .progress{flex:1;height:12px;background:#0b0b0c;border-radius:999px;overflow:hidden}
+  .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-strong));width:0%}
+  .progressLabel{min-width:60px;text-align:right;color:var(--muted);font-size:0.9rem}
+
+  /* Module nav */
+  .navList{display:flex;flex-direction:column;gap:8px}
+  .navList button{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted);padding:8px 10px;border-radius:10px;text-align:left;cursor:pointer}
+  .navList button.active{border-color:var(--accent);color:#fff;background:linear-gradient(180deg, rgba(0,173,238,0.06), transparent)}
+
+  /* Flashcards */
+  .flashcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
+  .card.flash{cursor:pointer;padding:12px;min-height:90px;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:600}
+
+  /* Accordion */
+  .accordion .item{border-top:1px dashed rgba(255,255,255,0.03);padding:10px 0}
+  .accordion button{width:100%;display:flex;justify-content:space-between;align-items:center;padding:8px;border-radius:8px;border:0;background:transparent;color:var(--muted);cursor:pointer}
+  .accordion .body{display:none;padding-top:8px;color:var(--muted);}
+
+  /* Quiz */
+  .quiz .question{margin-bottom:10px}
+  .options label{display:block;padding:6px;border-radius:8px;margin:6px 0;background:#0c0c0c;cursor:pointer}
+  .result{margin-top:10px;font-weight:700}
+
+  /* Buttons */
+  .btn{display:inline-block;padding:8px 12px;border-radius:10px;background:var(--accent);color:#fff;text-decoration:none;border:0;cursor:pointer;font-weight:600}
+  .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06)}
+  .small{padding:6px 8px;font-size:.9rem}
+
+  footer{margin-top:8px;color:var(--muted);font-size:0.85rem}
+  code{background:#0b0b0d;padding:6px;border-radius:6px;color:#e6f7ff;font-size:0.95rem}
+</style>
+</head>
+<body>
+  <main class="wrap" aria-live="polite">
+    <header>
+      <div>
+        <h1>Módulo 1 — Conocimientos de Hardware y Software</h1>
+        <div class="meta">Lección interactiva</div>
+        <a href="modulos.html" class="btn small">⬅ Volver a Módulos</a>
+      </div>
+    </header>
+
+    <!-- Layout principal -->
+    <section class="grid">
+      <!-- Columna principal -->
+      <div>
+        <!-- Tarjeta del diagnóstico rápido (quiz inicial) -->
+        <section class="card" id="diagnosticCard" aria-labelledby="diagTitle">
+          <h2 id="diagTitle">1) Diagnóstico rápido</h2>
+          <p>Completa este pequeño cuestionario para comenzar. No es examinación formal, sirve para ajustar el módulo.</p>
+
+          <form id="quizForm" class="quiz" aria-describedby="quizHelp">
+            <div id="quizHelp" style="display:none">Selecciona una opción por pregunta.</div>
+
+            <div class="question" data-q="q1">
+              <p><strong>1.</strong> ¿Cuál de los siguientes es un componente de hardware?</p>
+              <div class="options">
+                <label><input type="radio" name="q1" value="a"> Windows 10</label>
+                <label><input type="radio" name="q1" value="b"> Procesador (CPU)</label>
+                <label><input type="radio" name="q1" value="c"> Microsoft Office</label>
+              </div>
+            </div>
+
+            <div class="question" data-q="q2">
+              <p><strong>2.</strong> ¿Qué tipo de software gestiona el hardware?</p>
+              <div class="options">
+                <label><input type="radio" name="q2" value="a"> Software de aplicación</label>
+                <label><input type="radio" name="q2" value="b"> Sistema operativo</label>
+                <label><input type="radio" name="q2" value="c"> Antivirus</label>
+              </div>
+            </div>
+
+            <div class="question" data-q="q3">
+              <p><strong>3.</strong> ¿Cuál es la función básica de la memoria RAM?</p>
+              <div class="options">
+                <label><input type="radio" name="q3" value="a"> Almacenar información permanente</label>
+                <label><input type="radio" name="q3" value="b"> Guardar datos y programas en ejecución</label>
+                <label><input type="radio" name="q3" value="c"> Gestionar la conexión a internet</label>
+              </div>
+            </div>
+
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+              <button type="button" class="btn" id="submitQuiz">Enviar respuestas</button>
+               <!--<button type="button" class="btn ghost small" id="resetQuiz">Reiniciar</button> -->
+              <div style="margin-left:auto;color:var(--muted);align-self:center" id="quizStatus">Sin responder</div>
+            </div>
+
+            <div class="result" id="quizResult" aria-live="polite" style="display:block;margin-top:10px"></div>
+          </form>
+        </section>
+
+        <!-- Contenido del módulo: lecciones, accordion -->
+        <section class="card" id="moduleCard" style="display:none" aria-labelledby="moduleTitle">
+          <h2 id="moduleTitle">2) Lecciones del módulo</h2>
+          <p>Avanza en las secciones, revisa ejemplos y realiza los mini-quizzes.\nTu progreso se guarda localmente.</p>
+          <div style="margin-top:12px">
+          <a href="modulos.html" class="btn small">⬅ Volver a Módulos</a>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px">
+            <button class="btn" id="btnStartLesson">Iniciar desde el principio</button>
+            <button class="btn ghost" id="btnResume">Reanudar donde iba</button>
+            <button class="btn ghost" id="btnResetProgress">Borrar progreso</button>
+          </div>
+
+          <div class="accordion" id="lessons">
+            <!-- Lesson 1 -->
+            <div class="item" data-lesson="1">
+              <button class="lessonToggle"><span>Lección 1 — Hardware: componentes y funciones</span><span>▸</span></button>
+              <div class="body">
+                <p><strong>Resumen:</strong> El hardware son los componentes físicos: CPU, memoria, almacenamiento, placa base, fuente y periféricos.</p>
+                <ul>
+                  <li><strong>CPU:</strong> Procesamiento de instrucciones.</li>
+                  <li><strong>RAM:</strong> Memoria volátil que mantiene los programas en ejecución.</li>
+                  <li><strong>Almacenamiento:</strong> HDD/SSD, donde se guarda la información permanentemente.</li>
+                  <li><strong>Periféricos:</strong> Teclado, ratón, impresora, monitor.</li>
+                </ul>
+                <p><strong>Ejemplo práctico:</strong> Si el equipo se apaga al intentar jugar, puede ser problema de la fuente o temperatura de la CPU.</p>
+
+                <div style="margin-top:8px">
+                  <button class="btn small startMiniQuiz" data-quiz="hardware">Realizar mini-quiz (Hardware)</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Lesson 2 -->
+            <div class="item" data-lesson="2">
+              <button class="lessonToggle"><span>Lección 2 — Software: tipos y ejemplos</span><span>▸</span></button>
+              <div class="body">
+                <p><strong>Resumen:</strong> El software son instrucciones y programas. Tipos: sistema operativo, controladores, utilidades, software de aplicación.</p>
+                <p><strong>Sistema operativo:</strong> Windows, Linux, macOS — gestiona recursos y la ejecución de aplicaciones.</p>
+                <p><strong>Controladores:</strong> Software que permite al SO comunicarse con el hardware.</p>
+
+                <pre style="background:#0b0b0d;padding:10px;border-radius:8px;overflow:auto;color:var(--muted)">
+Ejemplo de proceso simple:
+1. Enciendes el PC -> BIOS/UEFI
+2. Carga del sistema operativo desde el disco
+3. Inicio de controladores y servicios
+                </pre>
+
+                <div style="margin-top:8px">
+                  <button class="btn small startMiniQuiz" data-quiz="software">Realizar mini-quiz (Software)</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Lesson 3 -->
+            <div class="item" data-lesson="3">
+              <button class="lessonToggle"><span>Lección 3 — Mantenimiento y seguridad básica</span><span>▸</span></button>
+              <div class="body">
+                <p><strong>Mantenimiento físico:</strong> Limpieza de ventiladores, revisión de conexiones y pasta térmica.</p>
+                <p><strong>Mantenimiento lógico:</strong> Actualizaciones, gestión de disco, desfragmentación (HDD), comprobación de errores.</p>
+                <p><strong>Seguridad:</strong> Uso de antivirus, copias de seguridad (backups), contraseñas robustas y actualizaciones.</p>
+
+                <div style="margin-top:8px">
+                  <button class="btn small startMiniQuiz" data-quiz="mantenimiento">Realizar mini-quiz (Mantenimiento)</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- Sección de recursos y practica -->
+        <div style="margin-top:12px">
+        <a href="modulos.html" class="btn small">⬅ Volver a Módulos</a>
+        </div>
+
+        <section class="card" id="practiceCard" style="display:none">
+          <h2>3) Práctica y recursos</h2>
+          <p>Prueba estas actividades rápidas para afianzar conocimientos:</p>
+          <ul>
+            <li>Identifica en un equipo real: CPU, ranuras de RAM, conector SATA.</li>
+            <li>Instala y ejecuta una herramienta de diagnóstico (por ejemplo: utilidades del sistema).</li>
+            <li>Realiza una copia de seguridad de tus documentos importantes.</li>
+          </ul>
+
+          <h3>Tarjetas (Flashcards)</h3>
+          <div class="flashcards" id="flashcards">
+            <div class="card flash" data-term="CPU" tabindex="0">CPU (clic para ver)</div>
+            <div class="card flash" data-term="RAM" tabindex="0">RAM (clic para ver)</div>
+            <div class="card flash" data-term="SSD" tabindex="0">SSD (clic para ver)</div>
+            <div class="card flash" data-term="SO" tabindex="0">Sistema Operativo (clic)</div>
+          </div>
+
+          <div style="margin-top:12px">
+            <!-- <button class="btn" id="downloadSummary">Descargar resumen (texto)</button>-->
+          </div>
+        </section>
+      </div>
+
+      <!-- Columna derecha: navegación, progreso, resumen -->
+      <aside>
+        <div class="card">
+          <h2>Progreso</h2>
+          <div class="progressWrap" aria-hidden="false">
+            <div class="progress" aria-label="Barra de progreso del módulo"><i id="progBar"></i></div>
+            <div class="progressLabel" id="progLabel">0%</div>
+          </div>
+          <p style="margin-top:10px;color:var(--muted)">Tu progreso se guarda localmente en este navegador.</p>
+        </div>
+
+        <div class="card">
+          <h2>Ir a sección</h2>
+          <div class="navList" id="navList">
+            <button data-target="diagnosticCard" class="active">Diagnóstico rápido</button>
+            <button data-target="moduleCard">Lecciones</button>
+            <button data-target="practiceCard">Práctica</button>
+          </div>
+        </div>
+
+        <div class="card" id="quickNotes">
+          <h2>Resumen rápido</h2>
+          <p style="color:var(--muted)">Hardware = físico. Software = instrucciones. Mantén tu equipo actualizado y haz backups.</p>
+        </div>
+      </aside>
+    </section>
+
+    <footer>
+      <small>Creado por: <strong>Orozo,Quilumba,Vargas,Zambrano</strong> — Proyecto en clase.</small>
+    </footer>
+  </main>
+
+<script>
+/* ======= Lógica del módulo (soy programador junior) ======= */
+/* Notas: corrección de selectores, uso de localStorage para progreso, quizzes por seccion. */
+
+const answersInitial = { q1:'b', q2:'b', q3:'b' };
+const submitQuizBtn = document.getElementById('submitQuiz');
+const resetQuizBtn = document.getElementById('resetQuiz');
+const quizResult = document.getElementById('quizResult');
+const quizStatus = document.getElementById('quizStatus');
+
+function getSelected(name){
+  const el = document.querySelector(`input[name="${name}"]:checked`);
+  return el ? el.value : null;
+}
+
+function computeScore(answersMap){
+  let score = 0;
+  for(const key in answersMap){
+    const sel = getSelected(key);
+    if(sel && sel === answersMap[key]) score++;
+  }
+  return score;
+}
+
+submitQuizBtn.addEventListener('click', ()=>{
+  const score = computeScore(answersInitial);
+  quizResult.textContent = `Obtuviste ${score} de 3 respuestas correctas.`;
+  quizStatus.textContent = 'Terminado';
+  // Mostrar módulos si usuario quiere continuar
+  document.getElementById('moduleCard').style.display = 'block';
+  document.getElementById('practiceCard').style.display = 'block';
+  // Guardar progreso simple
+  const prev = JSON.parse(localStorage.getItem('mod1_progress')||'{}');
+  prev.diagnostic = score;
+  prev.time = new Date().toISOString();
+  localStorage.setItem('mod1_progress', JSON.stringify(prev));
+  updateProgress();
+});
+
+resetQuizBtn.addEventListener('click', ()=>{
+  document.getElementById('quizForm').reset();
+  quizResult.textContent = '';
+  quizStatus.textContent = 'Sin responder';
+});
+
+/* Navigation buttons */
+document.getElementById('navList').addEventListener('click', (e)=>{
+  const btn = e.target.closest('button');
+  if(!btn) return;
+  document.querySelectorAll('#navList button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const target = document.getElementById(btn.dataset.target);
+  if(target){
+    window.scrollTo({top: target.offsetTop - 20, behavior:'smooth'});
+  }
+});
+
+/* Accordion logic */
+document.querySelectorAll('.lessonToggle').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const item = btn.closest('.item');
+    const body = item.querySelector('.body');
+    const isOpen = body.style.display === 'block';
+    // close all
+    document.querySelectorAll('.accordion .body').forEach(b=>b.style.display='none');
+    // rotate glyphs
+    document.querySelectorAll('.lessonToggle span:last-child').forEach(s=>s.textContent = '▸');
+    if(!isOpen){
+      body.style.display = 'block';
+      btn.querySelector('span:last-child').textContent = '▾';
+      // save lesson visited
+      saveLessonVisited(item.dataset.lesson);
+    } else {
+      body.style.display = 'none';
+      btn.querySelector('span:last-child').textContent = '▸';
+    }
+  });
+});
+
+/* Mini-quizzes por lección (simple) */
+document.querySelectorAll('.startMiniQuiz').forEach(btn=>{
+  btn.addEventListener('click', async (e)=>{
+    const quiz = btn.dataset.quiz;
+    // mostrar prompt simple con preguntas dependiendo quiz
+    let q, correct;
+    if(quiz === 'hardware'){
+      q = '¿Qué componente almacena permanentemente la información? (a) RAM  (b) SSD  (c) CPU';
+      correct = 'b';
+    } else if(quiz === 'software'){
+      q = '¿Cuál permite que el sistema operativo hable con un dispositivo? (a) Driver  (b) App  (c) BIOS';
+      correct = 'a';
+    } else {
+      q = '¿Qué práctica ayuda a recuperar datos ante fallos? (a) Copia de seguridad  (b) Desfragmentar  (c) Limpiar pantalla';
+      correct = 'a';
+    }
+    const resp = prompt(q + '\nEscribe la letra correcta: a, b o c');
+    if(resp === null) return;
+    const isCorrect = resp.trim().toLowerCase() === correct;
+    alert(isCorrect ? '✅ Correcto' : '❌ Incorrecto — revisa la lección.');
+    // registrar mini-quiz
+    const prev = JSON.parse(localStorage.getItem('mod1_progress')||'{}');
+    prev[`mini_${quiz}`] = isCorrect ? 1 : 0;
+    localStorage.setItem('mod1_progress', JSON.stringify(prev));
+    updateProgress();
+  });
+});
+
+/* Flashcards */
+const flashData = {
+  'CPU':'Unidad central de procesamiento. Ejecuta instrucciones y procesos.',
+  'RAM':'Memoria de acceso aleatorio. Almacena datos y programas en ejecución (volátil).',
+  'SSD':'Unidad de estado sólido. Almacenamiento permanente rápido.',
+  'SO':'Sistema operativo: gestiona recursos y aplicaciones del equipo.'
+};
+document.querySelectorAll('.card.flash').forEach(card=>{
+  card.addEventListener('click', ()=> toggleFlash(card));
+  card.addEventListener('keydown', (e)=>{ if(e.key==='Enter') toggleFlash(card); });
+});
+function toggleFlash(card){
+  const term = card.dataset.term;
+  if(card.dataset.show === '1'){
+    card.textContent = term + ' (clic para ver)';
+    card.dataset.show = '0';
+  } else {
+    card.textContent = flashData[term] || 'Definición no disponible';
+    card.dataset.show = '1';
+  }
+}
+
+/* Descargar resumen 
+document.getElementById('downloadSummary').addEventListener('click', ()=>{
+  const text = [
+    'Módulo 1 — Resumen',
+    '',
+    'Hardware: CPU, RAM, SSD/HDD, placa base, fuente, periféricos.',
+    'Software: Sistema operativo, controladores, utilidades, aplicaciones.',
+    'Mantenimiento: Limpieza física, actualizaciones, backups.',
+    '',
+    'Creado por: Programador junior'
+  ].join('\n');
+  const blob = new Blob([text], {type: 'text/plain;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'resumen_modulo1.txt';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+});*/
+
+/* Guardar y mostrar progreso */
+function updateProgress(){
+  const data = JSON.parse(localStorage.getItem('mod1_progress')||'{}');
+  // calcular % simple: diagnostic (0-3) => 33%, 3 lessons visited => +33% each etc
+  let score = 0;
+  if(typeof data.diagnostic === 'number') score += (data.diagnostic/3)*40; // up to 40%
+  // mini quizzes
+  const miniKeys = ['mini_hardware','mini_software','mini_mantenimiento'];
+  miniKeys.forEach(k => { if(data[k] === 1) score += 20/miniKeys.length; }); // up to 20%
+  // lessons visited
+  const visited = data.lessonsVisited || [];
+  score += Math.min(40, (visited.length/3)*40); // up to 40%
+  const pct = Math.round(Math.min(100, score));
+  document.getElementById('progBar').style.width = pct + '%';
+  document.getElementById('progLabel').textContent = pct + '%';
+}
+
+/* Save lesson visited */
+function saveLessonVisited(lessonId){
+  const data = JSON.parse(localStorage.getItem('mod1_progress')||'{}');
+  data.lessonsVisited = data.lessonsVisited || [];
+  if(!data.lessonsVisited.includes(lessonId)) data.lessonsVisited.push(lessonId);
+  localStorage.setItem('mod1_progress', JSON.stringify(data));
+  updateProgress();
+}
+
+/* Buttons: start/resume/reset */
+document.getElementById('btnStartLesson').addEventListener('click', ()=>{
+  // expand first lesson
+  const first = document.querySelector('.item[data-lesson="1"] .lessonToggle');
+  if(first) first.click();
+  // show module and practice
+  document.getElementById('moduleCard').style.display = 'block';
+  document.getElementById('practiceCard').style.display = 'block';
+});
+
+document.getElementById('btnResume').addEventListener('click', ()=>{
+  // resume by opening last visited lesson
+  const data = JSON.parse(localStorage.getItem('mod1_progress')||'{}');
+  const last = (data.lessonsVisited && data.lessonsVisited.slice(-1)[0]) || '1';
+  const btn = document.querySelector(`.item[data-lesson="${last}"] .lessonToggle`);
+  if(btn) btn.click();
+  document.getElementById('moduleCard').style.display = 'block';
+  document.getElementById('practiceCard').style.display = 'block';
+});
+
+document.getElementById('btnResetProgress').addEventListener('click', ()=>{
+  if(confirm('¿Borrar progreso del módulo? Se perderán datos locales.')) {
+    localStorage.removeItem('mod1_progress');
+    updateProgress();
+    alert('Progreso borrado');
+  }
+});
+
+/* Nav to show module after diagnostic if user opens file and localStorage exists */
+window.addEventListener('load', ()=>{
+  // if we have a saved diagnostic, show module
+  const data = JSON.parse(localStorage.getItem('mod1_progress')||'{}');
+  if(typeof data.diagnostic === 'number'){
+    document.getElementById('moduleCard').style.display = 'block';
+    document.getElementById('practiceCard').style.display = 'block';
+    quizResult.textContent = `Obtuviste ${data.diagnostic} de 3 respuestas correctas. (guardado)`;
+    quizStatus.textContent = 'Guardado local';
+  }
+  updateProgress();
+});
+</script>
+</body>
+</html>
