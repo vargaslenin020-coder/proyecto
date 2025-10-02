@@ -21,8 +21,12 @@ from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('usuarios.urls')),  # Includes your homepage and registration form at the root
     path('cuentas/', include('django.contrib.auth.urls')), # Includes login/logout
     path('accounts/profile/', views.perfil, name='profile'),
     path('logout/', LogoutView.as_view(), name='logout'),
+    path('registro/', views.registro, name='registro'),
+    path('', views.inicio, name='inicio'),
+    path('perfil/', views.perfil, name='perfil'),
+    path('modulos/', views.modulos, name='modulos'),
+    path('modulo1/', views.modulo1, name='modulo1'),
 ]

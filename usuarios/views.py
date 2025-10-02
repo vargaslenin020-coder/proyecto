@@ -22,8 +22,6 @@ def perfil(request):
 def modulos(request):
     return render(request, 'usuarios/modulos.html')
 
-def modulos(request):
-    return render(request, 'usuarios/modulos.html')
 
 def modulo1(request):
     return render(request, 'Modulo/modulo1.html')

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo: Manejo de Sistemas Operativos y Archivos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+        }
+        header {
+            background-color: #007BFF;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        main {
+            padding: 2rem;
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            margin-top: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #007BFF;
+        }
+        section {
+            margin-bottom: 2rem;
+        }
+        .quiz-question {
+            margin-bottom: 1rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        button {
+            padding: 0.5rem 1rem;
+            margin-top: 1rem;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #quizResult {
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Módulo: Manejo de Sistemas Operativos y Archivos</h1>
+    </header>
+    <main>
+        <!-- Contenido del módulo -->
+        <section>
+            <h2>Contenido del Módulo</h2>
+            <p>En este módulo aprenderás sobre los sistemas operativos y el manejo de archivos. Los temas incluyen:</p>
+            <ul>
+                <li>Definición y tipos de sistemas operativos (Windows, Linux, macOS).</li>
+                <li>Funciones principales de un sistema operativo.</li>
+                <li>Gestión de archivos y carpetas.</li>
+                <li>Comandos básicos de manejo de archivos en distintos sistemas operativos.</li>
+                <li>Seguridad y organización de la información en archivos.</li>
+            </ul>
+        </section>
+
+        <!-- Prueba de diagnóstico -->
+        <section>
+            <h2>Prueba de Diagnóstico</h2>
+            <form id="quizForm">
+                <div class="quiz-question">
+                    <p>1. ¿Cuál de los siguientes NO es un sistema operativo?</p>
+                    <label><input type="radio" name="q1" value="a"> Windows</label>
+                    <label><input type="radio" name="q1" value="b"> Linux</label>
+                    <label><input type="radio" name="q1" value="c"> Microsoft Word</label>
+                </div>
+
+                <div class="quiz-question">
+                    <p>2. ¿Cuál es la función principal de un sistema operativo?</p>
+                    <label><input type="radio" name="q2" value="a"> Ejecutar aplicaciones y gestionar recursos del hardware</label>
+                    <label><input type="radio" name="q2" value="b"> Crear documentos de texto</label>
+                    <label><input type="radio" name="q2" value="c"> Conectarse a Internet únicamente</label>
+                </div>
+
+                <div class="quiz-question">
+                    <p>3. ¿Qué comando se usa para listar archivos en Linux?</p>
+                    <label><input type="radio" name="q3" value="a"> ls</label>
+                    <label><input type="radio" name="q3" value="b"> dir</label>
+                    <label><input type="radio" name="q3" value="c"> list</label>
+                </div>
+
+                <button type="button" onclick="submitQuiz()">Enviar Respuestas</button>
+            </form>
+            <div id="quizResult"></div>
+        </section>
+    </main>
+
+    <script>
+        function submitQuiz() {
+            const answers = {
+                q1: 'c',
+                q2: 'a',
+                q3: 'a'
+            };
+            let score = 0;
+
+            for (let key in answers) {
+                const selected = document.querySelector(`input[name="${key}"]:checked`);
+                if (selected && selected.value === answers[key]) {
+                    score++;
+                }
+            }
+
+            const result = document.getElementById('quizResult');
+            result.textContent = `Obtuviste ${score} de 3 respuestas correctas.`;
+        }
+    </script>
+</body>
+</html>

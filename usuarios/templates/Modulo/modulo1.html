@@ -65,7 +65,7 @@
       <div>
         <h1>Módulo 1 — Conocimientos de Hardware y Software</h1>
         <div class="meta">Lección interactiva</div>
-        <a href="modulos.html" class="btn small">⬅ Volver a Módulos</a>
+        <a href="{% url 'modulos' %}" class="btn small">⬅ Volver a Módulos</a>
       </div>
     </header>
 
@@ -123,7 +123,7 @@
           <h2 id="moduleTitle">2) Lecciones del módulo</h2>
           <p>Avanza en las secciones, revisa ejemplos y realiza los mini-quizzes.\nTu progreso se guarda localmente.</p>
           <div style="margin-top:12px">
-          <a href="modulos.html" class="btn small">⬅ Volver a Módulos</a>
+          
           </div>
           <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px">
             <button class="btn" id="btnStartLesson">Iniciar desde el principio</button>
@@ -191,7 +191,7 @@ Ejemplo de proceso simple:
 
         <!-- Sección de recursos y practica -->
         <div style="margin-top:12px">
-        <a href="modulos.html" class="btn small">⬅ Volver a Módulos</a>
+
         </div>
 
         <section class="card" id="practiceCard" style="display:none">
@@ -275,7 +275,7 @@ function computeScore(answersMap){
 
 submitQuizBtn.addEventListener('click', ()=>{
   const score = computeScore(answersInitial);
-  quizResult.textContent = `Obtuviste ${score} de 3 respuestas correctas.`;
+  quizResult.textContent = "Obtuviste ${score} de 3 respuestas correctas";
   quizStatus.textContent = 'Terminado';
   // Mostrar módulos si usuario quiere continuar
   document.getElementById('moduleCard').style.display = 'block';
@@ -349,8 +349,8 @@ document.querySelectorAll('.startMiniQuiz').forEach(btn=>{
     const isCorrect = resp.trim().toLowerCase() === correct;
     alert(isCorrect ? '✅ Correcto' : '❌ Incorrecto — revisa la lección.');
     // registrar mini-quiz
-    const prev = JSON.parse(localStorage.getItem('mod1_progress')||'{}');
-    prev[`mini_${quiz}`] = isCorrect ? 1 : 0;
+    const prev = JSON.parse(localStorage.getItem('mod1_progress') || '{}');
+    prev[`mini_${quiz}`] = isCorrect ? 1 : 0;   
     localStorage.setItem('mod1_progress', JSON.stringify(prev));
     updateProgress();
   });
@@ -436,15 +436,19 @@ document.getElementById('btnStartLesson').addEventListener('click', ()=>{
   document.getElementById('practiceCard').style.display = 'block';
 });
 
-document.getElementById('btnResume').addEventListener('click', ()=>{
+document.getElementById('btnResume').addEventListener('click', () => {
   // resume by opening last visited lesson
-  const data = JSON.parse(localStorage.getItem('mod1_progress')||'{}');
+  const data = JSON.parse(localStorage.getItem('mod1_progress') || '{}');
   const last = (data.lessonsVisited && data.lessonsVisited.slice(-1)[0]) || '1';
+
+  // 👇 Selector dinámico corregido con backticks
   const btn = document.querySelector(`.item[data-lesson="${last}"] .lessonToggle`);
-  if(btn) btn.click();
+  
+  if (btn) btn.click();
   document.getElementById('moduleCard').style.display = 'block';
   document.getElementById('practiceCard').style.display = 'block';
 });
+
 
 document.getElementById('btnResetProgress').addEventListener('click', ()=>{
   if(confirm('¿Borrar progreso del módulo? Se perderán datos locales.')) {
@@ -461,8 +465,8 @@ window.addEventListener('load', ()=>{
   if(typeof data.diagnostic === 'number'){
     document.getElementById('moduleCard').style.display = 'block';
     document.getElementById('practiceCard').style.display = 'block';
-    quizResult.textContent = `Obtuviste ${data.diagnostic} de 3 respuestas correctas. (guardado)`;
-    quizStatus.textContent = 'Guardado local';
+   quizResult.textContent = `Obtuviste ${data.diagnostic} de 3 respuestas correctas. (guardado)`;
+quizStatus.textContent = 'Guardado local';
   }
   updateProgress();
 });
